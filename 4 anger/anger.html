@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title> </title>
+        <link rel="stylesheet" 
+        type="text/css" 
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+        <style>
+  body {
+    font-family: 'Pretendard', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* 배경 고정 */
+  .background img {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* 스크롤이 필요한 영역 (사용 여부에 따라 조절) */
+  .container {
+    position: relative;
+    width: 100%;
+    height: 1800px;
+  }
+
+  /* 메인 이미지 */
+  #mainImage {
+        position: absolute;
+        top: 52%;
+        left: 55%;
+        transform: translate(-50%, -50%);
+        width: 2400px;   /* 최대 가로폭 설정 */
+        height: auto;  
+        max-height: 70vh;  /* 최대 세로 높이: 화면의 90% */
+        object-fit: contain; /* 이미지 비율 유지하며 영역 내에 맞춤 */
+        z-index: 10;
+        transition: 0.3s ease;
+        }
+   
+  
+
+  #youtubeFrame {
+        position: absolute;
+        top: 52%;
+        left: 55%;
+        transform: translate(-50%, -50%);
+        width: 2600px; /* 기존보다 조금 더 크게 */
+        height: 1462.5px; /* 16:9 비율 유지 */
+        z-index: 10;
+        transition: 0.3s ease;
+        display: none;
+        
+      }
+  /* 썸네일 리스트 */
+  .thumbnails {
+    position: absolute;
+    top: 50%;
+    right: 160px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    z-index: 11;
+  }
+
+  /* 썸네일 이미지 */
+  .thumbnails img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+ .thumbnails img.active::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  background-image: url('https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/%E1%84%81%E1%85%A5%E1%86%A8%E1%84%89%E1%85%AC.png?v=1749910018200');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 100;
+}
+
+  .thumbnails img.active {
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 2;
+  }
+
+  /* 카테고리 버튼 (선택적 스타일) */
+  .category-buttons {
+    position: fixed;
+    top: 350px;
+    left: 850px;
+    z-index: 100;
+    display: flex;
+    gap: 40px;
+    flex-direction: column
+  }
+
+  .category-buttons button {
+    font-family: 'Pretendard', sans-serif;
+      all: unset; /* 기본 버튼 스타일 제거 */
+      font-size: 50px;
+      cursor: pointer;
+      text-align: left;
+      color: black;
+  }
+
+  .category-buttons button:hover {
+     text-decoration: underline;
+  }
+
+  .category-buttons button.active {
+    color: #FF6489;  }
+
+
+
+.emotion-nav {
+  position :fixed;
+    left: 150px;
+    top: 1650px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    z-index: 100;
+}
+
+.emotion-nav button {
+  all: unset;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 52px;
+  color: white;
+  cursor: pointer;
+  opacity: 0.5;
+  text-align: left;
+}
+
+.emotion-nav button:hover {
+  text-decoration: underline;
+}
+
+.emotion-nav button.active {
+  color: #FF6489;
+  opacity: 1;
+}
+
+</style>
+    </head>
+
+<script defer src="anger.js"></script>
+  
+  
+  
+  
+
+<body >
+   
+      <div class="background"> <!-- 배경이미지 -->
+            <img src="https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/anger.jpg?v=1750228220942" alt="background">
+      </div>
+      
+      
+      <img id="mainImage" class="main-image" src="" alt="Main Image" style="display: none;" /> // 일부러 비워둠//
+      <p id="sourceText" 
+        style="position: absolute;
+               text-align: left;
+               bottom: 50px;
+               left: 852px;
+               transform: none;
+               font-size: 50px;
+               color: black;
+               opacity: 0.3;
+               z-index: 20;"></p>
+      <iframe id="youtubeFrame" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<!-- 드라마 -->      
+<div class = "category" id="drama"> 
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0f71932d-8205-42ff-80a1-a00addd96161.image.png?v=1750147384455" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0f71932d-8205-42ff-80a1-a00addd96161.image.png?v=1750147384455" 
+         class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/3d7ece25-ed52-4f7f-94ab-bffa52064751.image.png?v=1750147437039" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/3d7ece25-ed52-4f7f-94ab-bffa52064751.image.png?v=1750147437039" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/4ad2bc5b-45ef-4b15-9afe-7159e62efa6b.image.png?v=1750147455262" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/4ad2bc5b-45ef-4b15-9afe-7159e62efa6b.image.png?v=1750147455262" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c1db5e7e-d739-4952-b591-c258efe5119e.image.png?v=1750147492203" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c1db5e7e-d739-4952-b591-c258efe5119e.image.png?v=1750147492203"
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/f90c8167-c10f-4a76-8480-73eedfa5ff72.image.png?v=1750147477942" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/f90c8167-c10f-4a76-8480-73eedfa5ff72.image.png?v=1750147477942"
+         class="thumb" alt="Thumb 5" /> 
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/b9f51270-c5be-456e-8ada-43ec36d945e1.image.png?v=1750147506769" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/b9f51270-c5be-456e-8ada-43ec36d945e1.image.png?v=1750147506769"
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/2a3e7eb9-a360-4833-955e-ff83066020e3.image.png?v=1750147535330" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/2a3e7eb9-a360-4833-955e-ff83066020e3.image.png?v=1750147535330"
+         class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+      
+<!-- 문학 -->
+<div class= "category" id="literature" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/858fd0aa-d8be-4150-90a6-21f951e0fde5.image.png?v=1750236824189" data-full="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/858fd0aa-d8be-4150-90a6-21f951e0fde5.image.png?v=1750236824189" 
+         data-source="source: https://kormedi.com/1792761/" class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/e013c5a6-4f76-424f-b918-e353eb676ee6.image.png?v=1750236846811" data-full="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/e013c5a6-4f76-424f-b918-e353eb676ee6.image.png?v=1750236846811" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/7ead89bf-8a77-46f2-b166-db29be6c912b.image.png?v=1750236886901" data-full="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/7ead89bf-8a77-46f2-b166-db29be6c912b.image.png?v=1750236886901" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/17de9ae3-69a9-43d9-ad39-beebb842efa4.image.png?v=1750237001805" data-full="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/17de9ae3-69a9-43d9-ad39-beebb842efa4.image.png?v=1750237001805" 
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/f5628884-d292-43a5-82ee-67727cca3111.image.png?v=1750236945640" data-full="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/f5628884-d292-43a5-82ee-67727cca3111.image.png?v=1750236945640" 
+         class="thumb" alt="Thumb 5" />
+    <img src="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/17de9ae3-69a9-43d9-ad39-beebb842efa4.image.png?v=1750237001805" data-full="https://cdn.glitch.global/8eeb5eea-5b05-4d6b-af0b-ebe16908b9ff/17de9ae3-69a9-43d9-ad39-beebb842efa4.image.png?v=1750237001805" 
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/7b1ede9a-05b7-4f64-85f3-49d0ef8c8083.image.png?v=1750147568930" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/7b1ede9a-05b7-4f64-85f3-49d0ef8c8083.image.png?v=1750147568930" 
+         class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+
+<!-- 예술/디자인 -->
+<div class= "category" id="art" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/e2a7d095-3587-4c89-b2fa-2aef0aef7ac8.image.png?v=1750148308910" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/e2a7d095-3587-4c89-b2fa-2aef0aef7ac8.image.png?v=1750148308910" 
+         data-source="사라짐: 흑인 소녀의 검은 허벅지와 심장 사이에서 일어난 남북전쟁의 역사적 로맨스 - 카라 워커 (https://www.moma.org/collection/works/110565)" class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/81ac57a9-5eba-4854-809f-34580064ef31.image.png?v=1750148345611" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/81ac57a9-5eba-4854-809f-34580064ef31.image.png?v=1750148345611" 
+         data-source="무제 (1981) - 장 미셸 바스키아 (https://www.thebroad.org/art/jean-michel-basquiat/untitled)" class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c1981951-0fda-49b1-aad7-2b9ff11174a6.image.png?v=1750148372348" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c1981951-0fda-49b1-aad7-2b9ff11174a6.image.png?v=1750148372348" 
+         data-source="골리앗의 머리를 든 다윗 - 카라바조 (https://galleriaborghese.beniculturali.it/en/)" class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/42e7ae22-0302-4fb5-992f-64ef0ffaa2be.image.png?v=1750148396702" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/42e7ae22-0302-4fb5-992f-64ef0ffaa2be.image.png?v=1750148396702"
+         data-source="민중을 이끄는 자유의 여신 - 외젠 들라크루아 (https://www.louvre.fr) " class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d4082253-3183-4883-92dd-9b5733093672.image.png?v=1750148410093" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d4082253-3183-4883-92dd-9b5733093672.image.png?v=1750148410093"
+         data-source="마라의 죽음 - 자크 루이 다비드 (https://fine-arts-museum.be/en)" class="thumb" alt="Thumb 5" />
+     <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/e4169be9-54cf-4306-ab2c-497c914730b5.image.png?v=1750148428212" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/e4169be9-54cf-4306-ab2c-497c914730b5.image.png?v=1750148428212"
+         data-source="메두사 호의 뗏목 - 테오도르 제리코 (https://www.louvre.fr)" class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c6a86c4b-59ec-4812-a69b-87be90d860ad.image.png?v=1750148610157" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c6a86c4b-59ec-4812-a69b-87be90d860ad.image.png?v=1750148610157"
+         data-source="1808년 5월 3일 - 프란시스코 고야 (https://www.museodelprado.es)" class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+      
+
+<!-- 음악/사운드 -->
+<div class= "category" id="music" style="display: none;">
+  <div class="thumbnails">
+     <div class="thumb" data-type="youtube" data-video="https://youtu.be/N0PIn3sSZEI?si=OOZzGyVGgGAeerHt">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://youtu.be/fIyfB8b1RIM?si=t3_BCCsuVCUhIhdI">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://youtu.be/14JlhhwoKKQ?si=RWGHA-S-OMcK1DWE">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://youtu.be/erEHzRfPPB0?si=2uctnfAwxJqII5hv">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://youtu.be/YDlYsr4dH2Q?si=B8mBRTYMnwlPC0pC">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://youtu.be/ZjfN7m9Ow8o?si=8hFC5uq597uywJMI">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://youtu.be/wVAq3CzHf9E?si=iREf4xk2Y1TYu8Nq">
+    </div>
+
+  </div>
+
+  </div>
+</div>
+
+<!-- 라이프스타일 -->
+<div class= "category" id="lifestyle" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/74c42d06-1d04-4b85-bd86-a2dc9bca2b04.image.png?v=1750152596962" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/74c42d06-1d04-4b85-bd86-a2dc9bca2b04.image.png?v=1750152596962" 
+         class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/60028e4e-309f-48c3-9e00-6b578eb46134.image.png?v=1750152625193" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/60028e4e-309f-48c3-9e00-6b578eb46134.image.png?v=1750152625193" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5f239cc7-ab73-43da-84c4-a7b919dc3e07.image.png?v=1750152649314" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5f239cc7-ab73-43da-84c4-a7b919dc3e07.image.png?v=1750152649314" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/34d3a996-dc39-4d79-bea8-354d94bac4a1.image.png?v=1750152782980" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/34d3a996-dc39-4d79-bea8-354d94bac4a1.image.png?v=1750152782980" 
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/ad5e25f2-a929-4d28-af5e-ee9472724893.image.png?v=1750152758696" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/ad5e25f2-a929-4d28-af5e-ee9472724893.image.png?v=1750152758696"
+         class="thumb" alt="Thumb 5" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d331bc91-092a-4d66-a1bb-854595911c33.image.png?v=1750152729256" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d331bc91-092a-4d66-a1bb-854595911c33.image.png?v=1750152729256"
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5e4c48ef-35b2-4ec9-aa4e-95a44adc5c6e.image.png?v=1750152679987" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5e4c48ef-35b2-4ec9-aa4e-95a44adc5c6e.image.png?v=1750152679987"
+         class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+
+<!-- 자연/풍경 -->
+ <div class= "category" id="nature" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/ac17f8cb-db12-4f0c-a754-fe89a1841d7c.image.png?v=1750226497086" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/ac17f8cb-db12-4f0c-a754-fe89a1841d7c.image.png?v=1750226497086" 
+         class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5b9bbd5d-fbe3-42a7-ae97-3636070ba116.image.png?v=1750226461755" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5b9bbd5d-fbe3-42a7-ae97-3636070ba116.image.png?v=1750226461755" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/85876bcd-0fdc-40ab-b736-d8350763335c.image.png?v=1750226400532" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/85876bcd-0fdc-40ab-b736-d8350763335c.image.png?v=1750226400532" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/12e97727-23bc-4bdd-b448-b9171261b6fa.image.png?v=1750226386252" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/12e97727-23bc-4bdd-b448-b9171261b6fa.image.png?v=1750226386252"
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/6fc705c3-758f-4a20-8aeb-13ab2c9a0dc4.image.png?v=1750226354285" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/6fc705c3-758f-4a20-8aeb-13ab2c9a0dc4.image.png?v=1750226354285"
+         class="thumb" alt="Thumb 5" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/8f9221ad-80e8-4661-9439-8b73e550ef2e.image.png?v=1750226309657" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/8f9221ad-80e8-4661-9439-8b73e550ef2e.image.png?v=1750226309657"
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/7dcc4a2d-4cdf-4d59-82db-9b3dd9569fb6.image.png?v=1750226445152" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/7dcc4a2d-4cdf-4d59-82db-9b3dd9569fb6.image.png?v=1750226445152"
+         class="thumb" alt="Thumb 7" /> 
+     </div>
+</div>
+
+<!-- 유머/실험 -->
+ <div class= "category" id="humour" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0eedaca6-4467-497c-88a8-94d214fc3f27.image.png?v=1750145624106" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0eedaca6-4467-497c-88a8-94d214fc3f27.image.png?v=1750145624106" 
+         data-source="source: 듀가나디 (작가: 짤쓸사람)" class="thumb" alt="Thumb 1" class="active"/> 
+
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d6ff0fe4-47df-47f1-bb29-ea794a6c6f56.image.png?v=1750145695173" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d6ff0fe4-47df-47f1-bb29-ea794a6c6f56.image.png?v=1750145695173" 
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 2" />
+
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/b3c1678a-1e43-46aa-80a8-5ab20ec03140.image.png?v=1750145730946" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/b3c1678a-1e43-46aa-80a8-5ab20ec03140.image.png?v=1750145730946" 
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 3" />
+
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/462ff88a-bad2-4575-8901-300d142d45eb.image.png?v=1750145759257" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/462ff88a-bad2-4575-8901-300d142d45eb.image.png?v=1750145759257"
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 4" />
+
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/29e012ad-1d8d-4d90-ad68-0469f2a27378.image.png?v=1750145783894" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/29e012ad-1d8d-4d90-ad68-0469f2a27378.image.png?v=1750145783894"
+         data-source="source: MBC 거침없이 하이킥" class="thumb" alt="Thumb 5" />
+
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c1938d64-ce4e-4ed1-9732-929111b71f1e.image.png?v=1750145808823" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c1938d64-ce4e-4ed1-9732-929111b71f1e.image.png?v=1750145808823"
+         data-source="source: 심슨" class="thumb" alt="Thumb 6" />
+
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5a06aaf1-255e-41a6-893c-24fe41d00894.image.png?v=1750145863714" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/5a06aaf1-255e-41a6-893c-24fe41d00894.image.png?v=1750145863714"
+         data-source="source: MBC 거침없이 하이킥" class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+      
+<div class="category-buttons">
+      <button data-category="drama">-10 드라마/극</button>
+      <button data-category="literature">-20 문학</button>
+      <button data-category="art">-30 예술/디자인</button>
+      <button data-category="music">-40 음악/사운드</button>
+      <button data-category="lifestyle">-50 라이프스타일</button>
+      <button data-category="nature">-60 자연/풍경</button>
+      <button data-category="humour">-70 유머/실험</button>
+    </div>
+
+
+  </body>
+
+  <div class="emotion-nav">
+  <button onclick="location.href='joy.html'">100 Joy</button>
+  <button onclick="location.href='sadness.html'">200 Sadness</button>
+  <button onclick="location.href='anger.html'">300 Anger</button>
+  <button onclick="location.href='fear.html'">400 Fear</button>
+  <button onclick="location.href='surprise.html'">500 Surprise</button>
+  <button onclick="location.href='disgust.html'">600 Disgust</button>
+  <button onclick="location.href='neutral.html'">700 Neutral</button>
+</div>
+
+    
+  </body>
+</html>

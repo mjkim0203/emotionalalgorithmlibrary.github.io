@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title> </title>
+        <link rel="stylesheet" 
+        type="text/css" 
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+        <style>
+  body {
+    font-family: 'Pretendard', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  /* 배경 고정 */
+  .background img {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* 스크롤이 필요한 영역 (사용 여부에 따라 조절) */
+  .container {
+    position: relative;
+    width: 100%;
+    height: 1800px;
+  }
+
+  /* 메인 이미지 */
+  #mainImage {
+        position: absolute;
+        top: 52%;
+        left: 55%;
+        transform: translate(-50%, -50%);
+        width: 2400px;   /* 최대 가로폭 설정 */
+        height: auto;  
+        max-height: 70vh;  /* 최대 세로 높이: 화면의 90% */
+        object-fit: contain; /* 이미지 비율 유지하며 영역 내에 맞춤 */
+        z-index: 10;
+        transition: 0.3s ease;
+        }
+   
+  
+
+  #youtubeFrame {
+        position: absolute;
+        top: 52%;
+        left: 55%;
+        transform: translate(-50%, -50%);
+        width: 2600px; /* 기존보다 조금 더 크게 */
+        height: 1462.5px; /* 16:9 비율 유지 */
+        z-index: 10;
+        transition: 0.3s ease;
+        display: none;
+        
+      }
+  /* 썸네일 리스트 */
+  .thumbnails {
+    position: absolute;
+    top: 50%;
+    right: 160px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    z-index: 11;
+  }
+
+  /* 썸네일 이미지 */
+  .thumbnails img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+ .thumbnails img.active::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  background-image: url('https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/%E1%84%81%E1%85%A5%E1%86%A8%E1%84%89%E1%85%AC.png?v=1749910018200');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 100;
+}
+
+  .thumbnails img.active {
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 2;
+  }
+
+  /* 카테고리 버튼 (선택적 스타일) */
+  .category-buttons {
+    position: fixed;
+    top: 350px;
+    left: 850px;
+    z-index: 100;
+    display: flex;
+    gap: 40px;
+    flex-direction: column
+  }
+
+  .category-buttons button {
+    font-family: 'Pretendard', sans-serif;
+      all: unset; /* 기본 버튼 스타일 제거 */
+      font-size: 50px;
+      cursor: pointer;
+      text-align: left;
+      color: black;
+  }
+
+  .category-buttons button:hover {
+     text-decoration: underline;
+  }
+
+  .category-buttons button.active {
+    color: #aaaeaa;  }
+
+
+
+.emotion-nav {
+  position :fixed;
+    left: 150px;
+    top: 1650px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    z-index: 100;
+}
+
+.emotion-nav button {
+  all: unset;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 52px;
+  color: white;
+  cursor: pointer;
+  opacity: 0.5;
+  text-align: left;
+}
+
+.emotion-nav button:hover {
+  text-decoration: underline;
+}
+
+.emotion-nav button.active {
+  color: #aaaeaa;
+  opacity: 1;
+}
+
+</style>
+    </head>
+
+<script defer src="neutral.js"></script>
+  
+  
+  
+  
+
+<body >
+   
+      <div class="background"> <!-- 배경이미지 -->
+            <img src="https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/neutral.jpg?v=1750228229005" alt="background">
+      </div>
+      
+      
+      <img id="mainImage" class="main-image" src="" alt="Main Image" style="display: none;" /> // 일부러 비워둠//
+      <p id="sourceText" 
+        style="position: absolute;
+               text-align: left;
+               bottom: 50px;
+               left: 852px;
+               transform: none;
+               font-size: 50px;
+               color: black;
+               opacity: 0.3;
+               z-index: 20;"></p>
+      <iframe id="youtubeFrame" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<!-- 드라마 -->      
+<div class = "category" id="drama"> 
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-96.jpeg?v=1750232750621" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-96.jpeg?v=1750232750621" 
+         class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-98.jpeg?v=1750232732144" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-98.jpeg?v=1750232732144" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/디어마이프렌즈.png?v=1750232926179" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/디어마이프렌즈.png?v=1750232926179" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/c-WYFoU0KWK0wVj__hBONXZaLcgdgA4xdd0sK3njAX5T5VCOYAHvdnt8sua1PloMSscYhnAeZK__ERYPqxFMWJjKBMLcKrE49kNnveg4QhVoyM1uVz5xRTSw6rBpOQaC9e4vTlmP5ydGZAc7O-a09Q.webp?v=1750233019134" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/c-WYFoU0KWK0wVj__hBONXZaLcgdgA4xdd0sK3njAX5T5VCOYAHvdnt8sua1PloMSscYhnAeZK__ERYPqxFMWJjKBMLcKrE49kNnveg4QhVoyM1uVz5xRTSw6rBpOQaC9e4vTlmP5ydGZAc7O-a09Q.webp?v=1750233019134" 
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-100.jpeg?v=1750233924716" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-100.jpeg?v=1750233924716" 
+         class="thumb" alt="Thumb 5" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-103.jpeg?v=1750233856169" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/common-103.jpeg?v=1750233856169" 
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/QBPU6HG4W4PgIvTkGBMTlsG_zNPubO21M9bhllmBlqQfNlkKtZZpWWKghWk4Ya0d-mQIeKH4hHHpsPAxwMVUNU76BrMkC_B9ypK-7NY-QQS783x0naxoRlOgfeA7taBx9GNQxY0ZEGZ7qpWus4ooVA.webp?v=1750234179263" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/QBPU6HG4W4PgIvTkGBMTlsG_zNPubO21M9bhllmBlqQfNlkKtZZpWWKghWk4Ya0d-mQIeKH4hHHpsPAxwMVUNU76BrMkC_B9ypK-7NY-QQS783x0naxoRlOgfeA7taBx9GNQxY0ZEGZ7qpWus4ooVA.webp?v=1750234179263" 
+         class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+      
+<!-- 문학 -->
+<div class= "category" id="literature" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/9791164456284.jpg?v=1750234453172" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/9791164456284.jpg?v=1750234453172" 
+         class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/시지프신화.png?v=1750234512282" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/시지프신화.png?v=1750234512282" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/e893743448_1.jpg?v=1750234799793" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/e893743448_1.jpg?v=1750234799793" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/783087f1f988a4ee526831a4d5b66448dc9959eae7c75476b5831505821c.jpg?v=1750234671544" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/783087f1f988a4ee526831a4d5b66448dc9959eae7c75476b5831505821c.jpg?v=1750234671544" 
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/9791160401974.jpg?v=1750234993608" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/9791160401974.jpg?v=1750234993608" 
+         class="thumb" alt="Thumb 5" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/9791188090259.jpg?v=1750235081271" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/9791188090259.jpg?v=1750235081271" 
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/sunny-14.jpeg?v=1750235511123" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/sunny-14.jpeg?v=1750235511123" 
+         class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+
+<!-- 예술/디자인 -->
+<div class= "category" id="art" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/e641ac38-58e5-45c5-a5e2-f48a76ba466e.image.png?v=1750231197632" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/e641ac38-58e5-45c5-a5e2-f48a76ba466e.image.png?v=1750231197632" 
+         data-source="시간의 문제 (The Matter of Time) - 리차드 세라 (https://www.guggenheim.org/artwork/21794)" class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/9cf5a578-a3ee-432c-94a7-d7589e015b34.image.png?v=1750231285543" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/9cf5a578-a3ee-432c-94a7-d7589e015b34.image.png?v=1750231285543" 
+         data-source="해변의 수도승 - 카스파르 다비드 프리드리히 (https://artsandculture.google.com/asset/mönch-am-meer/KwEv_TMiJhn5kA?hl=ko)" class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/a757a28b-a653-4484-9f88-5be47026bd8d.image.png?v=1750231296941" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/a757a28b-a653-4484-9f88-5be47026bd8d.image.png?v=1750231296941" 
+         data-source="Hardly More Than Ever - 로라 레틴스키 (https://lauraletinsky.com/hardly-more-than-ever-(1997-2006))" class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/841ccb65-d00e-47b5-9f20-5113357aee5f.image.png?v=1750231534528" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/841ccb65-d00e-47b5-9f20-5113357aee5f.image.png?v=1750231534528"
+         data-source="무제 - 마크 로스코 (https://www.pacegallery.com)" class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d93febaa-6aaa-498f-9665-fe65d10313d1.image.png?v=1750231548494" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/d93febaa-6aaa-498f-9665-fe65d10313d1.image.png?v=1750231548494"
+         data-source="빨강, 파랑, 노랑의 구성 - 피에트 몬드리안 (https://www.kunsthaus.ch)" class="thumb" alt="Thumb 5" />
+     <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/18bca69a-8033-472c-ba6c-896bf197ae5e.image.png?v=1750231578063" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/18bca69a-8033-472c-ba6c-896bf197ae5e.image.png?v=1750231578063"
+         data-source="뉴욕의 방 - 에드워드 호퍼 (https://www.arthistoryproject.com/artists/edward-hopper/room-in-new-york/)" class="thumb" alt="Thumb 6" />
+    <img src=https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/bb1a82e1-581b-4c81-86fd-8c0f6ca3b491.image.png?v=1750231586971" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/bb1a82e1-581b-4c81-86fd-8c0f6ca3b491.image.png?v=1750231586971"
+         data-source="정물화 - 조르조 모란디 (https://mmca.go.kr/exhibitions/exhibitionsDetail.do?menuId=1010000000&exhId=201411040000176)" class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+      
+
+<!-- 음악/사운드 -->
+<div class= "category" id="music" style="display: none;">
+  <div class="thumbnails">
+     <div class="thumb" data-type="youtube" data-video="https://youtu.be/Twi92KYddW4?si=VU7Kj-8apWlHt536">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://www.youtube.com/watch?v=mEkMk2KBmK0">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://www.youtube.com/watch?v=GYediWu_ixw">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://www.youtube.com/watch?v=92IlKBhKbWM">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://www.youtube.com/watch?v=bHvT0SNITuU&list=PLvmyQOpeJ2biut2dDbrRz-6rKpmB4llGt">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://youtu.be/f9uVX7SPIb4?si=M2HS7RqlmnfM0_Gh">
+    </div>
+    <div class="thumb" data-type="youtube" data-video="https://www.youtube.com/watch?v=TYjqNJDcegs">
+    </div>
+
+  </div>
+</div>
+
+<!-- 라이프스타일 -->
+<div class= "category" id="lifestyle" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0490e433-6e6a-4603-b044-f65bd3ab7094.image.png?v=1750231613266" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0490e433-6e6a-4603-b044-f65bd3ab7094.image.png?v=1750231613266" 
+         class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/072e5c53-ee55-4a9b-b9be-b51e6c86a301.image.png?v=1750236951376" data-full="https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/072e5c53-ee55-4a9b-b9be-b51e6c86a301.image.png?v=1750236951376" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/852fc23b-944f-4e57-a89a-975578b9845b.image.png?v=1750231677259" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/852fc23b-944f-4e57-a89a-975578b9845b.image.png?v=1750231677259" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/bc611c91-c682-407c-bf6e-0ca90c155732.image.png?v=1750231662888" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/bc611c91-c682-407c-bf6e-0ca90c155732.image.png?v=1750231662888" 
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_a_young_person_staring_directly_into_the_camera_w_145455f9-7f98-4637-b707-51ec4f07c684_0.png?v=1750232422169" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_a_young_person_staring_directly_into_the_camera_w_145455f9-7f98-4637-b707-51ec4f07c684_0.png?v=1750232422169" 
+         class="thumb" alt="Thumb 5" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/2713a6a0-d509-4c41-a7f8-1a0c2698a2d0.image.png?v=1750231644906" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/2713a6a0-d509-4c41-a7f8-1a0c2698a2d0.image.png?v=1750231644906" 
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c39c07bf-046f-4fc0-a621-5ec6039ce5c2.image.png?v=1750231631187" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/c39c07bf-046f-4fc0-a621-5ec6039ce5c2.image.png?v=1750231631187" 
+         class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+
+<!-- 자연/풍경 -->
+ <div class= "category" id="nature" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_a_minimal_architectural_space_with_a_rectangular__7bf5e8e8-f2be-4bcc-8ca3-9927b1ea41f6_1.png?v=1750238524075" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_a_minimal_architectural_space_with_a_rectangular__7bf5e8e8-f2be-4bcc-8ca3-9927b1ea41f6_1.png?v=1750238524075" 
+         class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_An_endless_sea_of_silver_a_calm_and_tranquil_scen_eb24d764-6593-4858-b1c7-f9589fb2b97a_1.png?v=1750238790115" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_An_endless_sea_of_silver_a_calm_and_tranquil_scen_eb24d764-6593-4858-b1c7-f9589fb2b97a_1.png?v=1750238790115" 
+         class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_httpss.mj.runLob6XHa1uGo_httpss.mj.runGdcb9SiVyTw_de2ab06b-6060-4154-a8cd-8fc2698474ac_0.png?v=1750238809648" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_httpss.mj.runLob6XHa1uGo_httpss.mj.runGdcb9SiVyTw_de2ab06b-6060-4154-a8cd-8fc2698474ac_0.png?v=1750238809648" 
+         class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_black_and_white_photograph_of_a_crowded_escalator_1d0dc1dd-779e-4248-a49c-2477087710ed_2.png?v=1750238833108" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_black_and_white_photograph_of_a_crowded_escalator_1d0dc1dd-779e-4248-a49c-2477087710ed_2.png?v=1750238833108" 
+         class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_aerial_view_of_a_modern_highway_with_multiple_lan_e9d9ff18-9caf-4957-b196-c0d2c35774ae_3.png?v=1750238843308" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_aerial_view_of_a_modern_highway_with_multiple_lan_e9d9ff18-9caf-4957-b196-c0d2c35774ae_3.png?v=1750238843308" 
+         class="thumb" alt="Thumb 5" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_httpss.mj.runPLxzYmAngNI_abstract_bokeh_image_of__522adb38-0919-447c-a825-179b3924dd28_3.png?v=1750238860924" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/u1362682349_httpss.mj.runPLxzYmAngNI_abstract_bokeh_image_of__522adb38-0919-447c-a825-179b3924dd28_3.png?v=1750238860924" 
+         class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/166.png?v=1750238940624" data-full="https://cdn.glitch.global/b44f159c-f64a-4064-8ef5-1dc771a2bcd0/166.png?v=1750238940624" 
+         class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+
+<!-- 유머/실험 -->
+ <div class= "category" id="humour" style="display: none;">
+  <div class="thumbnails">
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/ec680ff9-59d9-4b37-b7f9-1e4b6d3d8001.image.png?v=1750144022894" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/ec680ff9-59d9-4b37-b7f9-1e4b6d3d8001.image.png?v=1750144022894" 
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 1" class="active"/>
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0872cded-eb09-43cc-95c4-40bf23e53142.image.png?v=1750144094970" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/0872cded-eb09-43cc-95c4-40bf23e53142.image.png?v=1750144094970" 
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 2" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/31adb201-6737-44f1-af28-32529c55492d.image.png?v=1750144118621" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/31adb201-6737-44f1-af28-32529c55492d.image.png?v=1750144118621" 
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 3" />
+    <img src="https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/IMG_2708.JPG?v=1750238408433" data-full="https://cdn.glitch.global/0a5d2682-7616-407b-9085-ffe7abe7f40d/IMG_2708.JPG?v=1750238408433"
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 4" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/25033e5b-b50f-460d-957e-803407c0d87e.image.png?v=1750144174042" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/25033e5b-b50f-460d-957e-803407c0d87e.image.png?v=1750144174042"
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 5" />
+     <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/800a7b3e-9a2f-4f09-bba9-e17890963ae5.image.png?v=1750144220544" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/800a7b3e-9a2f-4f09-bba9-e17890963ae5.image.png?v=1750144220544"
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 6" />
+    <img src="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/800a7b3e-9a2f-4f09-bba9-e17890963ae5.image.png?v=1750144220544" data-full="https://cdn.glitch.global/c5bbcd91-79b2-438d-881b-29aefe29eb50/800a7b3e-9a2f-4f09-bba9-e17890963ae5.image.png?v=1750144220544"
+         data-source="source: MBC 무한도전" class="thumb" alt="Thumb 7" />
+  </div>
+</div>
+      
+<div class="category-buttons">
+      <button data-category="drama">-10 드라마/극</button>
+      <button data-category="literature">-20 문학</button>
+      <button data-category="art">-30 예술/디자인</button>
+      <button data-category="music">-40 음악/사운드</button>
+      <button data-category="lifestyle">-50 라이프스타일</button>
+      <button data-category="nature">-60 자연/풍경</button>
+      <button data-category="humour">-70 유머/실험</button>
+    </div>
+
+
+  </body>
+
+  <div class="emotion-nav">
+  <button onclick="location.href='joy.html'">100 Joy</button>
+  <button onclick="location.href='sadness.html'">200 Sadness</button>
+  <button onclick="location.href='anger.html'">300 Anger</button>
+  <button onclick="location.href='fear.html'">400 Fear</button>
+  <button onclick="location.href='surprise.html'">500 Surprise</button>
+  <button onclick="location.href='disgust.html'">600 Disgust</button>
+  <button onclick="location.href='neutral.html'">700 Neutral</button>
+</div>
+
+    
+  </body>
+</html>
