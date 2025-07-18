@@ -20,5 +20,33 @@
 		</div>
 </div>
 </div>
+<script>
+$(document).ready(function(){
+  const formInputs = $('input[type="text"]');
+  formInputs.focus(function() {
+    $(this).parent().children('p.formLabel').addClass('formTop');
+    $('#formWrapper').addClass('darken-bg');
+  });
+  formInputs.focusout(function() {
+    if ($.trim($(this).val()).length === 0) {
+      $(this).parent().children('p.formLabel').removeClass('formTop');
+    }
+    $('#formWrapper').removeClass('darken-bg');
+  });
+  $('p.formLabel').click(function() {
+    $(this).parent().children('.form-style').focus();
+  });
+});
+
+function handleLogin() {
+  const name = document.getElementById('username').value.trim();
+  if (name) {
+    localStorage.setItem('username', name);
+    window.location.href = 'welcome.html';
+  } else {
+    alert('이름을 입력해주세요.');
+  }
+}
+</script>
 </body>
 </html>
