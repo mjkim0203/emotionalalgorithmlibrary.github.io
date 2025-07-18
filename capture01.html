@@ -1,35 +1,50 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emotional Capture</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fullscreen Video</title>
+  <link rel="stylesheet" href="main.css" />
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Pretendard', sans-serif;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    .fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -1; /* 영상은 뒤로 */
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* 클릭 방지 */
+    }
+  </style>
 </head>
 <body onclick="window.location.href='login.html'">
-  <div class="container">
-    <div class="top-question">
-      <span>◀</span>
-      <p><strong>OOO님</strong> 최근 가장 인상적이었던 순간 기분이 어땠나요?</p>
-      <span>▶</span>
-    </div>
-
-    <div class="capture-box">
-      <div class="corner top-left"></div>
-      <div class="corner top-right"></div>
-      <div class="corner bottom-left"></div>
-      <div class="corner bottom-right"></div>
-      <div class="capture-text">Click to Capture</div>
-    </div>
-
-    <div class="graphic-btn">감정 그래픽</div>
-
-    <div class="emotion-label">Happiness</div>
-
-    <div class="footer">
-      <span class="logo-mark">{</span>
-      <span class="logo-text">EMOTIONAL<br/>ALGORITHM<br/>LIBRARY</span>
-    </div>
+  <div class="fullscreen">
+    <video autoplay muted loop playsinline>
+      <source src="https://cdn.glitch.me/84495060-c03f-45e1-9112-d6f7e6fbef8d/%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A9%E1%84%89%E1%85%B3%E1%84%92%E1%85%A1%E1%86%B8%E1%84%87%E1%85%A9%E1%86%AB-2.mp4?v=1749323159749" type="video/mp4">
+    </video>
   </div>
 </body>
 </html>
