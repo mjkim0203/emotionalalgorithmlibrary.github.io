@@ -1,5 +1,5 @@
 <html lang="en">
-    <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="main.css" />
@@ -10,5 +10,34 @@
       <source src="https://cdn.glitch.me/84495060-c03f-45e1-9112-d6f7e6fbef8d/%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A9%E1%84%89%E1%85%B3%E1%84%92%E1%85%A1%E1%86%B8%E1%84%87%E1%85%A9%E1%86%AB-2.mp4?v=1749323159749" type="video/mp4">
     </video>
   </div>
-    </body>
+
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    .fullscreen {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      pointer-events: none; /* 클릭 방지 */
+    }
+  </style>
+</body>
 </html>
