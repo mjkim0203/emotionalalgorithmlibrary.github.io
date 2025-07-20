@@ -103,13 +103,13 @@
     function handleLogin() {
       const name = document.getElementById('username').value.trim();
       if (!name) {
-        localStorage.setItem('userName', name);
-        window.location.href = 'faceapi.html';
-        return false; // prevent default <a> action
-      } else {
         alert('이름을 입력해주세요.');
         return false; // block navigation
       }
+      localStorage.setItem('userName', name);
+        window.location.href = 'faceapi.html'; // redirect to the next page
+        return false; // prevent default <a> action
+    }
     }
   </script>
 </body>
