@@ -3,8 +3,8 @@ window.addEventListener('load', () => {
   const circle1 = document.querySelector('.circle1');
   const circle2 = document.querySelector('.circle2');
   const circle3 = document.querySelector('.circle3');
-  const title = document.querySelector('.title');
-  const subtitle = document.querySelector('.subtitle');
+  const title = document.getElementById('title');
+  const subtitle = document.getElementById('subtitle');
   const emotionValue = document.querySelector('.emotion-value');
   const emotionText = emotionValue ? emotionValue.textContent.trim() : '중립';
   const emotionEngWrapper = document.getElementById('emotionEngWrapper');
@@ -59,26 +59,27 @@ window.addEventListener('load', () => {
 
     // 사용자 이름 설정
     const userName = localStorage.getItem("userName") || "Guest";
-    document.getElementById("user-name").textContent = userName;
+    const userNameEl = document.getElementById("user-name");
+    if (userNameEl) {
+      userNameEl.textContent = userName;
+    }
   }, 9000);
 });
 
 // 1분(60초) 후에 index.html로 리다이렉트
-  let idleTimer;
-  function resetIdleTimer() {
-    clearTimeout(idleTimer);
-    idleTimer = setTimeout(() => {
-      window.location.href = 'index.html';
-    }, 60_000);
-  }
+let idleTimer;
+function resetIdleTimer() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    window.location.href = 'index.html';
+  }, 60000);
+}
 
-  // 페이지가 준비되면 타이머 시작
-  window.addEventListener('load', () => {
-    resetIdleTimer();
-
-    // 다음 이벤트 발생 시마다 타이머 리셋
-    ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll']
-      .forEach(evt => {
-        document.addEventListener(evt, resetIdleTimer, { passive: true });
-      });
-  });
+// 페이지가 준비되면 타이머 시작
+window.addEventListener('load', () => {
+  resetIdleTimer();
+  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll']
+    .forEach(evt => {
+      document.addEventListener(evt, resetIdleTimer, { passive: true });
+    });
+});
