@@ -1,5 +1,3 @@
-// js/player.js
-
 // 1) 파일이 로드되었는지 최상단에서 확인
 console.log("▶▶▶ player.js 로드됨");
 
@@ -18,14 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 4) 메시지 수신 핸들러 등록
       ttContainer.onMessage = (message) => {
-        console.log("📨 수신 메시지:", message);
-        const url   = message.trim();
         const video = document.getElementById("player");
-        if (!video) {
-          console.error("❌ 비디오 엘리먼트 #player 를 찾을 수 없습니다");
-          return;
-        }
-        video.src = url;
+        video.src = message;
         video.load();
         video.play()
           .then(() => { video.muted = false; })
