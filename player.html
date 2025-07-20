@@ -56,18 +56,19 @@ video[controls] {
       console.log("MQTT 연결 성공 (DISPLAY)");
 
       ttContainer.onMessage = function (message) {
-        console.log("수신 메시지:", message);
-        const video = document.getElementById("videoPlayer");
-        video.src = message;
-        video.load();
-        video.play()
-        .then(() => {
-        // 무음 자동재생이 시작된 후, 바로 소리 켜기
-          video.muted = false;
-        })
+        const url = message.trim();
+  const video = document.getElementById("player");
+  video.src = url;      // 직접 src에
+  video.load();
+  video.play()
+       .then(() => { video.muted = false; })
         .catch(err => console.error('자동 재생 차단됨:', err));
-        };
-    });
+      };
+    },
+    {
+brokerUrl: "wss://broker.hivemq.com:8000/mqtt"
+  }
+    );
   </script>
 </body>
 </html>
