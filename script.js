@@ -1,12 +1,10 @@
-// script.js
+// script.js (최종 안정화 버전 - bounding box 및 CSS 영향 없음)
 
-// 감정 색상 정의
 const emotionColors = {
   neutral: "#AAAEAA", happy: "#FFE048", sad: "#A7C9FF",
   disgusted: "#D0FF3E", surprised: "#FF865C", angry: "#FF6489", fearful: "#CE6EB5"
 };
 
-// 감정별 이동 링크
 const emotionLinks = {
   happy: "tri.joy.html", sad: "tri.sadness.html",
   angry: "tri.anger.html", fearful: "tri.fear.html",
@@ -14,7 +12,6 @@ const emotionLinks = {
   neutral: "tri.neutral.html"
 };
 
-// 감정별 그래픽 이미지
 const emotionImages = {
   Neutral: "https://cdn.glitch.global/.../IMOJI-100.png",
   Joy: "https://cdn.glitch.global/.../IMOJI-200.png",
@@ -101,61 +98,90 @@ async function analyzeEmotionLoop(video, canvas, displaySize) {
   const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 128, scoreThreshold: 0.3 });
 
   async function analyze() {
-    const result = await faceapi.detectSingleFace(video, options)
-      .withFaceLandmarks(true)
-      .withFaceExpressions();
+    try {
+      const videoAlive = video && video.readyState >= 2 && !video.paused && !video.ended && video.srcObject?.active;
+      if (!videoAlive) {
+        console.warn("🎥 비디오 멈춤 감지됨, 루프 유지 중...");
+        setTimeout(analyze, 1000);
+        return;
+      }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const result = await faceapi.detectSingleFace(video, options)
+        .withFaceLandmarks(true)
+        .withFaceExpressions();
 
-    ctx.save();
-    ctx.translate(canvas.width, 0);
-    ctx.scale(-1, 1);
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    ctx.restore();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.restore();
 
-    if (result) {
-      const resized = faceapi.resizeResults(result, displaySize);
-      const box = resized.detection.box;
-      const expressions = result.expressions;
+      if (result) {
+        const resized = faceapi.resizeResults(result, displaySize);
+        const box = resized.detection.box;
+        const expressions = result.expressions;
 
-      const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
-      const topEmotion = sorted[0][0];
-      window._topEmotion = topEmotion;
-      const emotionName = emotionLabels[topEmotion];
-      const label = `${emotionName || topEmotion} (${(sorted[0][1] * 100).toFixed(1)}%)`;
+        const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
+        const topEmotion = sorted[0][0];
+        window._topEmotion = topEmotion;
+        const emotionName = emotionLabels[topEmotion];
+        const label = `${emotionName || topEmotion} (${(sorted[0][1] * 100).toFixed(1)}%)`;
 
-      const targetColor = blendEmotionColor(expressions);
-      window._boxColor = window._boxColor ? lerpColor(window._boxColor, targetColor, 0.4) : targetColor;
-      if (bannerEl) bannerEl.style.backgroundColor = window._boxColor;
+        const targetColor = blendEmotionColor(expressions);
+        window._boxColor = window._boxColor ? lerpColor(window._boxColor, targetColor, 0.4) : targetColor;
+        if (bannerEl) bannerEl.style.backgroundColor = window._boxColor;
 
-      const mirroredBoxX = canvas.width - box.x - box.width;
-      ctx.strokeStyle = window._boxColor;
-      ctx.lineWidth = 8;
-      ctx.strokeRect(mirroredBoxX, box.y, box.width, box.height);
+        const mirroredBoxX = canvas.width - box.x - box.width;
+        ctx.strokeStyle = window._boxColor;
+        ctx.lineWidth = 8;
+        ctx.strokeRect(mirroredBoxX, box.y, box.width, box.height);
 
-      ctx.font = "40px 'Pretendard', sans-serif";
-      ctx.textAlign = "left";
-      ctx.textBaseline = "top";
-      const padding = 12;
-      const textX = mirroredBoxX + 4;
-      const textY = box.y - 60;
-      const textWidth = ctx.measureText(label).width;
-      const textHeight = 50;
+        ctx.font = "40px 'Pretendard', sans-serif";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        const padding = 12;
+        const textX = mirroredBoxX + 4;
+        const textY = box.y - 60;
+        const textWidth = ctx.measureText(label).width;
+        const textHeight = 50;
 
-      ctx.fillStyle = window._boxColor;
-      ctx.fillRect(textX - padding, textY - padding, textWidth + padding * 2, textHeight + padding * 1.2);
-      ctx.fillStyle = "#000000";
-      ctx.fillText(label, textX, textY);
+        ctx.fillStyle = window._boxColor;
+        ctx.fillRect(textX - padding, textY - padding, textWidth + padding * 2, textHeight + padding * 1.2);
+        ctx.fillStyle = "#000000";
+        ctx.fillText(label, textX, textY);
 
-      if (emotionImages[emotionName]) graphicEl.src = emotionImages[emotionName];
-      captureImageEl.src = "https://cdn.glitch.global/.../CAPTURE.png";
+        if (emotionImages[emotionName]) graphicEl.src = emotionImages[emotionName];
+        captureImageEl.src = "https://cdn.glitch.global/.../CAPTURE.png";
 
-      if (emotionLinks[topEmotion]) linkEl.classList.add("active");
-      else linkEl.classList.remove("active");
+        if (emotionLinks[topEmotion]) linkEl.classList.add("active");
+        else linkEl.classList.remove("active");
+      }
+    } catch (err) {
+      console.error("감정 분석 중 오류 발생:", err);
+    } finally {
+      setTimeout(analyze, 400);
     }
-    setTimeout(analyze, 400); // 최적화된 루프 주기
   }
+
   analyze();
+}
+
+async function getPreferredCameraStream() {
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+  let preferredDevice = videoDevices.find((device) =>
+    device.label.toLowerCase().includes("elgato facecam")
+  );
+
+  const constraints = {
+    video: preferredDevice
+      ? { deviceId: { exact: preferredDevice.deviceId }, width: 640, height: 480 }
+      : { width: 640, height: 480 },
+    audio: false
+  };
+
+  return await navigator.mediaDevices.getUserMedia(constraints);
 }
 
 async function init() {
