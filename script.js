@@ -185,6 +185,7 @@ async function init() {
 
         const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
         const topEmotion = sorted[0][0];
+        window._topEmotion = topEmotion;
         const emotionName = emotionLabels[topEmotion];
         const label = `${emotionName || topEmotion} (${(sorted[0][1] * 100).toFixed(1)}%)`;
 
