@@ -54,23 +54,22 @@ video[controls] {
 
 ttContainer.mqttConnect(
   projectCode,
-  TOPIC_TYPE.DISPLAY,
+  TOPIC_TYPE.DISPLAY,            // 구독용 토픽
   () => {
-    console.log("✅ MQTT 연결 성공 (DISPLAY)");
-
-    // 메시지 받았을 때 동작 정의
-    ttContainer.onMessage = (message) => {
+    console.log("🟢 MQTT 연결 성공 (DISPLAY)");
+    // 메시지 수신 핸들러
+    ttContainer.onMessage = message => {
       const url   = message.trim();
       const video = document.getElementById("player");
       video.src   = url;
       video.load();
       video.play()
         .then(() => { video.muted = false; })
-        .catch(err => console.error('자동 재생 차단됨:', err));
+        .catch(err => console.error("자동 재생 차단됨:", err));
     };
   },
   {
-    // HTTPS 페이지이니 반드시 wss:// 로 시작하는 퍼블릭 브로커를 지정
+    // ← 이 옵션 블록이 mqttConnect 의 4번째 인자여야 합니다.
     brokerUrl: "wss://broker.hivemq.com:8000/mqtt"
   }
 );
