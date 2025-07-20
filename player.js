@@ -1,4 +1,5 @@
- document.addEventListener('DOMContentLoaded', () => {
+console.log("▶ player.js 실행됨");
+document.addEventListener('DOMContentLoaded', () => {
  const projectCode = "sample";
 
     ttContainer.mqttConnect(projectCode, TOPIC_TYPE.DISPLAY, function () {
