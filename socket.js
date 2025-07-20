@@ -1,9 +1,9 @@
-// 1) 프로젝트 코드, CONTROL 토픽으로 연결
+// 1) 프로젝트 코드, PUBLISH 토픽으로 연결
     const projectCode = "sample";
     ttContainer.mqttConnect(
       projectCode,
-      TOPIC_TYPE.CONTROL,
-      () => console.log("🟢 MQTT 연결 성공 (CONTROL)"),
+      TOPIC_TYPE.PUBLISH,
+      () => console.log("🟢 MQTT 연결 성공 (PUBLISH)"),
         {
     // 퍼블릭 테스트 브로커 예시 (wss:// 스킴이 HTTPS 페이지에서 필수)
     brokerUrl: "wss://broker.hivemq.com:8000/mqtt"
@@ -27,6 +27,6 @@
 
 
         console.log('▶ sendControlMessage:', videoSrc);
-        ttContainer.sendMessage(videoSrc);
+        ttContainer.publish(videoSrc);
       });
     });
