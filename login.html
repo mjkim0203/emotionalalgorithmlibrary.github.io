@@ -102,8 +102,8 @@
 
     function handleLogin() {
       const name = document.getElementById('username').value.trim();
-      if (name) {
-        localStorage.setItem('username', name);
+      if (!name) {
+        localStorage.setItem('userName', name);
         window.location.href = 'faceapi.html';
         return false; // prevent default <a> action
       } else {
