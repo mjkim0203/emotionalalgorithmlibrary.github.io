@@ -1,15 +1,35 @@
+function goToEmotionPage() {
+  if (!window._topEmotion) {
+    alert("감정이 아직 감지되지 않았습니다.");
+    return;
+  }
+
+  const emotionLinks = {
+    happy: "tri.joy.html",
+    sad: "tri.sadness.html",
+    angry: "tri.anger.html",
+    fearful: "tri.fear.html",
+    disgusted: "tri.disgust.html",
+    surprised: "tri.surprise.html",
+    neutral: "tri.neutral.html"
+  };
+
+  const link = emotionLinks[window._topEmotion];
+  if (link) {
+    window.location.href = link; // 기존 창에서 이동
+  } else {
+    alert("이동할 페이지가 정의되지 않았습니다.");
+  }
+}
+
+
+
 // 색상 및 리소스 정의
 const emotionColors = {
   neutral: "#AAAEAA", happy: "#FFE048", sad: "#A7C9FF",
   disgusted: "#D0FF3E", surprised: "#FF865C", angry: "#FF6489", fearful: "#CE6EB5"
 };
 
-const emotionLinks = {
-      happy: "tri.joy.html", sad: "tri.sadness.html",
-      angry: "tri.anger.html", fearful: "tri.fear.html",
-      disgusted: "tri.disgust.html", surprised: "tri.surprise.html",
-      neutral: "tri.neutral.html"
-    };
 
 const emotionImages = {
           Neutral: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-100.png?v=1751373938451/IMOJI-100.png",
