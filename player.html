@@ -47,33 +47,10 @@ video[controls] {
 <body>
   <video id="videoPlayer" autoplay loop muted playsinline></video>
 
+  
   <script src="js/mqttws31.js"></script>
   <script src="js/TTContainer_v1.0.0.js"></script>
-  <script>
-    const projectCode = "sample";
-
-ttContainer.mqttConnect(
-  projectCode,
-  TOPIC_TYPE.DISPLAY,            // 구독용 토픽
-  () => {
-    console.log("🟢 MQTT 연결 성공 (DISPLAY)");
-    // 메시지 수신 핸들러
-    ttContainer.onMessage = message => {
-      const url   = message.trim();
-      const video = document.getElementById("player");
-      video.src   = url;
-      video.load();
-      video.play()
-        .then(() => { video.muted = false; })
-        .catch(err => console.error("자동 재생 차단됨:", err));
-    };
-  },
-  {
-    // ← 이 옵션 블록이 mqttConnect 의 4번째 인자여야 합니다.
-    brokerUrl: "wss://broker.hivemq.com:8000/mqtt"
-  }
-);
-
-  </script>
+  <script src="player.js"></script>
+  
 </body>
 </html>
