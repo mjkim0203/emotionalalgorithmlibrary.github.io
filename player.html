@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    video {
+      width: 100%;
+      margin: 5vh auto;
+      display: block;
+    }
+
+/* 내장 컨트롤 완전 숨기기 */
+    /* 1. WebKit(Chrome/Safari) */
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-play-button {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* 2. Firefox */
+video::-moz-media-controls {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* 3. 모든 브라우저 공통: 
+      controls 크기를 0으로 축소해버리는 방법도 있습니다 */
+video[controls] {
+  /* 아예 컨트롤 UI용 공간을 0으로 줄이기 */
+  --media-controls-height: 0px;
+}
+
+
+  </style>
+</head>
+<body>
+  <video id="videoPlayer" autoplay loop muted playsinline></video>
+
+  <script src="js/mqttws31.js"></script>
+  <script src="js/TTContainer_v1.0.0.js"></script>
+  <script>
+    const projectCode = "sample";
+
+    ttContainer.mqttConnect(projectCode, TOPIC_TYPE.DISPLAY, function () {
+      console.log("MQTT 연결 성공 (DISPLAY)");
+
+      ttContainer.onMessage = function (message) {
+        console.log("수신 메시지:", message);
+        const video = document.getElementById("videoPlayer");
+        video.src = message;
+        video.load();
+        video.play()
+        .then(() => {
+        // 무음 자동재생이 시작된 후, 바로 소리 켜기
+          video.muted = false;
+        })
+        .catch(err => console.error('자동 재생 차단됨:', err));
+        };
+    });
+  </script>
+</body>
+</html>

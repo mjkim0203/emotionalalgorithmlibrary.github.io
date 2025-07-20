@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Pretendard&display=swap');
+
+/* === 공통 설정 === */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #000;
+  color: white;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 상단 롤링바 */
+.top-bar {
+  background: white;
+  color: black;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 3vw;
+  padding: 10px 0;
+  white-space: nowrap;
+  text-align: center;
+  position: relative;
+  z-index: 100;
+}
+
+.scroll-wrapper {
+  display: flex;
+  overflow: hidden;
+}
+
+.scroll-text {
+  white-space: nowrap;
+  animation: scrollLeft 9.5s linear infinite;
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* === 메인 화면 구조 === */
+.screen-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: 9 / 16;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 각 화면 (1/2) 기본 */
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen.show {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* === 텍스트 위치 오버랩 (title <-> notice-text) === */
+.title, 
+.notice-text {
+  position: absolute;
+  top: 10vh;
+  font-size: 5vw;
+  font-weight: 510;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.screen1 .title {
+  opacity: 1;
+}
+
+.screen2 .notice-text {
+  opacity: 1;
+}
+
+/* === 화면1: 감정 분석 중 UI === */
+.subtitle {
+  font-size: 3vw;
+  margin-top: 7vh;
+  margin-bottom: 9vh;
+  text-align: center;
+}
+
+.circles {
+  position: relative;
+  height: 25vh;
+  margin-bottom: 6vh;
+}
+
+.circle1, .circle2, .circle3 {
+  position: absolute;
+}
+
+.circle1 {
+  width: 26vw;
+  height: 26vw;
+  background: url("https://i.ibb.co/JRGKgqSZ/g-300-1.png") no-repeat center center;
+  background-size: contain;
+  top: 10vh;
+  left: 7vw;
+  transform: rotate(20deg); /* 🔁 원하는 각도 */
+  animation: moveCircle1 2s ease-in-out infinite;
+}
+
+.circle2 {
+  width: 16vw;
+  height: 16vw;
+  background: url("https://i.ibb.co/JRGKgqSZ/g-300-1.png") no-repeat center center;
+  background-size: contain;
+  top: 14vh;
+  right: 9vw;
+  transform: rotate(-30deg);
+  animation: scaleCircle2 2s ease-in-out infinite;
+}
+
+.circle3 {
+  width: 12vw;
+  height: 12vw;
+  background: url("https://i.ibb.co/YTwZDVWn/g-300.png") no-repeat center center;
+  background-size: contain;
+  top: 1vh;
+  left: -5vw;
+  animation: moveCircle3 2s ease-in-out infinite;
+}
+
+@keyframes moveCircle1 {
+  0%, 100% { transform: translateX(0) rotate(20deg); }
+  50% { transform: translateX(5vw) rotate(40deg); }
+}
+
+@keyframes scaleCircle2 {
+  0%, 100% { transform: scale(1) rotate(-30deg); }
+  50% { transform: scale(1.4) rotate(0deg); }
+}
+
+@keyframes moveCircle3 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5vh); }
+}
+
+.emotion-eng-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7vw;
+  margin: 5vh 0 1vh 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.emotion-eng-wrapper.show {
+  opacity: 1;
+}
+
+.emotion-eng {
+  font-size: 7vw;
+  font-weight: 500;
+}
+
+.bracket-img {
+  width: 8vw;
+  opacity: 1;
+}
+
+.bracket-img.left { transform: rotate(90deg); }
+.bracket-img.right { transform: rotate(-90deg); }
+
+/* === 화면1 전용: 프로그레스 바 + 로고 (하단 고정) === */
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #070707;
+  z-index: 20;
+  padding-bottom: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+}
+
+.screen2 .fixed-bottom .progress-wrapper {
+  display: none;
+}
+
+.progress-wrapper {
+  width: 60%;
+  height: 1.2vh;
+  margin: 6vh auto 13vh;
+  border: 2px solid #94C0FF;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #94C0FF;
+  border-radius: 999px;
+  transition: width 5s ease-in-out;
+}
+
+.logo-img {
+  width: 15vw;
+  height: auto;
+  margin-bottom: 3vh;
+}
+
+/* === 화면2: 사용자 정보 UI === */
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://i.ibb.co/BHtJV2Lf/B-300.png") no-repeat center top;
+  background-size: 70%;
+  z-index: 1;
+  pointer-events: none;
+  display: none; /* 기본적으로 숨김 */
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  background: linear-gradient(to bottom, rgba(148, 192, 255, 0.35), rgba(148, 192, 255, 0));
+  z-index: 2;
+  pointer-events: none;
+  display: none; /* 기본적으로 숨김 */
+}
+
+.graphic-box {
+  z-index: 3;
+  width: 30vw;
+  margin: 8vh auto 4vh;
+}
+
+.graphic-img {
+  width: 100%;
+  height: auto;
+}
+
+.info-block {
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+  z-index: 3;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 3vw;
+}
+
+.label {
+  font-size: 3.5vw;
+  color: #94C0FF;
+  font-weight: 540;
+}
+
+.value {
+  font-size: 4.8vw;
+  font-weight: 500;
+  margin-top: 0.5vh;
+}
+
+.divider {
+  width: 55vw;
+  height: 1px;
+  background-color: #94C0FF;
+  margin: 3vh auto;
+}
+
+.emoji-img {
+  width: 5vw;
+  margin-bottom: 0.3vh;
+}
+
+.value.emotion-value {
+  margin-bottom: 8vh;
+}
+
+.fixed-logo {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #070707;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 4vh;
+}
+
+.fixed-logo .logo-img {
+  width: 15vw;
+  height: auto;
+}
+
+.page-buttons {
+  position: relative;
+  z-index: 50;
+}
+
+.home-button {
+  position: relative;
+  top: 5.2vh;
+  right: 22vw;
+  padding: 0.7vh 3vw;
+  border-color: #94C0FF;
+  border-width: 0.3vw;
+  border-style: solid;
+  color: #94C0FF;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 3vw;
+  font-weight: 600;
+  border-radius: 5rem;
+  background-color: transparent;
+}
+
+.next-button {
+  position: relative;
+  top: 5.2vh;
+  left: 22vw;
+  padding: 0.7vh 3.8vw;
+  border-color: #94C0FF;
+  border-width: 0.3vw;
+  border-style: solid;
+  color: #94C0FF;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 3vw;
+  font-weight: 600;
+  border-radius: 5rem;
+  background-color: transparent;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감정 분석 결과</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tri.neutral.css" />
+</head>
+<body>
+
+  <!-- 상단 롤링바 -->
+  <div class="top-bar">
+    <div class="scroll-wrapper">
+      <div class="scroll-text">
+        HOW ALGORITHM U FEELING TODAY?&nbsp;&nbsp;&nbsp; HOW ALGORITHM U FEELING TODAY?&nbsp;&nbsp;&nbsp; HOW ALGORITHM U FEELING TODAY?
+      </div>
+    </div>
+  </div>
+
+  <!-- 메인 화면 컨테이너 -->
+  <div class="screen-container">
+    
+    <!-- 화면1 : 분석 중 + 완료 -->
+    <div class="screen screen1 show">
+      <div class="title" id="title">감정 분석하는 중 . . .</div>
+      <div class="subtitle" id="subtitle">지금 감정을 분석하고 있어요</div>
+
+      <div class="circles">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+      </div>
+
+      <div class="emotion-eng-wrapper" id="emotionEngWrapper">
+        <img src="https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/CAPTURE-100.png?v=1751441474929" alt="left bracket" class="bracket-img left">
+        <div class="emotion-eng" id="emotionEng">Neutral</div>
+        <img src="https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/CAPTURE-100.png?v=1751441474929" alt="right bracket" class="bracket-img right">
+      </div>
+
+      <!-- ✅ 프로그레스 바는 화면1 내부에 고정 -->
+      <div class="progress-wrapper">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
+
+    <!-- 화면2 : 사용자 정보 -->
+    <div class="background-image"></div>
+    <div class="gradient-overlay"></div>
+
+    <div class="screen screen2">
+      <div class="notice-text">이제 다음 단계로 넘어가주세요!</div>
+
+      <!-- 감정 그래픽 -->
+      <div class="graphic-box">
+        <img src="https://i.ibb.co/nN8fWqMc/GRAPHIC-100.png" alt="emotion graphic" class="graphic-img" />
+      </div>
+
+      <!-- 사용자정보 -->
+      <div class="info-block">
+        <div class="info-row">
+          <img src="https://i.ibb.co/VcCFXKvB/g-100.png" class="emoji-img" />
+          <div class="label">User Name</div>
+        </div>
+        <div class="value" id="user-name">이름</div>
+
+        <div class="divider"></div>
+
+        <div class="info-row">
+          <img src="https://i.ibb.co/VcCFXKvB/g-100.png" class="emoji-img" />
+          <div class="label">Emotion</div>
+        </div>
+        <div class="value emotion-value" id="emotion-ko">중립</div>
+
+        <div class="page-buttons">
+           <button onclick="location.href='index.html'" class="home-button">← home</button>
+           <button data-video-src="videos/neutral.mp4 " 
+                   data-audio-src="audio/neutral.mp3"
+           class="next-button">next →</button>
+        </div>
+   
+       <audio id="triggerAudio" preload="auto"></audio>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ 하단 고정 로고만 별도로 -->
+  <div class="fixed-logo">
+    <img src="https://i.ibb.co/JWZj7K9v/LOGO-1.png" class="logo-img" />
+  </div>
+
+<!-- 1) Paho MQTT WebSocket 클라이언트 -->
+  <script src="js/mqttws31.js"></script>
+  <!-- 2) TTContainer 래퍼 -->
+  <script src="js/TTContainer_v1.0.0.js"></script>
+
+  <script src="script.js"></script>
+  <script src="socket.js"></script>
+
+</body>
+</html>
