@@ -52,8 +52,14 @@ video[controls] {
   <script>
     const projectCode = "sample";
 
-    ttContainer.mqttConnect(projectCode, TOPIC_TYPE.DISPLAY, function () {
-      console.log("MQTT 연결 성공 (DISPLAY)");
+    ttContainer.mqttConnect(
+  projectCode,
+  TOPIC_TYPE.DISPLAY,
+  onConnectCallback,
+  {
+    brokerUrl: "wss://broker.hivemq.com:8000/mqtt"
+  }
+);
 
       ttContainer.onMessage = function (message) {
         const url = message.trim();
@@ -64,11 +70,7 @@ video[controls] {
        .then(() => { video.muted = false; })
         .catch(err => console.error('자동 재생 차단됨:', err));
       };
-    },
-    {
-brokerUrl: "wss://broker.hivemq.com:8000/mqtt"
-  }
-    );
+
   </script>
 </body>
 </html>
