@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Face Detection Fun Test - 4K</title>
 
- <!-- Fonts & Styles -->
+  <!-- External Scripts -->
+  <script defer src="https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/dist/face-api.min.js"></script>
+  <script defer src="script.js"></script>
+
+  <!-- Fonts & Styles -->
   <link rel="stylesheet" href="styles.css" />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
 </head>
@@ -16,9 +20,12 @@
       <div class="prompt-text">문장 불러오는 중...</div>
     </div>
     <div id="emotion-banner">HOW ALGORITM U FEELING TODAY?</div>
+
     <div id="canvasContainer">
-      <video id="video" autoplay muted playsinline style="visibility:hidden; position:absolute; width:0; height:0;"></video>
+      <video id="video" autoplay muted playsinline></video>
+      <canvas id="overlay"></canvas>
     </div>
+
     <a id="emotion-link" href="javascript:void(0);" class="emotion-button" onclick="goToEmotionPage()">
       <img id="capture-image" alt="감정별 캡처 버튼" />
     </a>
