@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로그인</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <style>
+    * {
+      font-family: 'Pretendard', sans-serif;
+    }
+    html, body {
+      margin: 0; padding: 0; box-sizing: border-box;
+      background: black; background-size: cover;
+      height: 100%;
+    }
+    h1, h2 { font-size: 2.4rem; font-weight: 600; color: white; }
+    .title { text-align: center; margin-bottom: 20px; }
+    #formWrapper {
+      background: rgba(0, 0, 0, 0.2);
+      width: 100%; height: 100%;
+      position: absolute; top: 0; left: 0;
+      display: flex; justify-content: center; align-items: center;
+    }
+    #form {
+      width: 360px; padding: 20px;
+      background-color: black;
+      border-radius: 10px;
+    }
+    .form-item { margin-bottom: 20px; position: relative; }
+    .formLabel {
+      position: absolute; top: 10px; left: 20px;
+      color: #bbb; transition: all 0.3s ease;
+    }
+    .form-style {
+      width: 100%; padding: 20px 20px;
+      border-radius: 30px; border: 1px solid #ccc;
+      background-color: #000; color: #aaa;
+      font-size: 16px;
+    }
+    .form-style:focus {
+      border: 1px solid white; outline: none; color: white;
+    }
+    .formTop {
+      top: -20px !important; font-size: 14px; color: #e5e5e5 !important;
+    }
+
+    .login-button {
+      display: block;
+      width: 112px; height: 44px;
+      border-radius: 22px;
+      background-color: #000;
+      border: 1.5px solid #636363;
+      color: white; font-weight: bold;
+      font-size: 105%;
+      text-align: center; line-height: 44px;
+      margin: 0 auto;
+      text-decoration: none;
+    }
+
+    .login-button:hover {
+      background-color: white;
+      color: black;
+      border: 1.5px solid white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="formWrapper">
+    <div id="form">
+      <div class="title">
+        <h2>대출카드에 기입할 이름을 적어주세요.</h2>
+      </div>
+      <div class="form-item">
+        <p class="formLabel">이름을 입력해주세요</p>
+        <input type="text" id="username" class="form-style" autocomplete="off" />
+      </div>
+      <div class="form-item">
+        <!-- href는 비워두고 onclick에서 제어 -->
+        <a href="#" class="login-button" onclick="return handleLogin()">Next</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      const formInputs = $('input[type="text"]');
+      formInputs.focus(function() {
+        $(this).siblings('.formLabel').addClass('formTop');
+      });
+      formInputs.blur(function() {
+        if ($.trim($(this).val()) === '') {
+          $(this).siblings('.formLabel').removeClass('formTop');
+        }
+      });
+      $('.formLabel').click(function() {
+        $(this).siblings('.form-style').focus();
+      });
+    });
+
+    function handleLogin() {
+      const name = document.getElementById('username').value.trim();
+      if (!name) {
+        alert('이름을 입력해주세요.');
+        return false; // block navigation
+      }
+      localStorage.setItem('userName', name);
+        window.location.href = 'faceapi.html'; // redirect to the next page
+        return false; // prevent default <a> action
+    }
+  </script>
+</body>
+</html>
