@@ -3,7 +3,11 @@
     ttContainer.mqttConnect(
       projectCode,
       TOPIC_TYPE.CONTROL,
-      () => console.log("🟢 MQTT 연결 성공 (CONTROL)")
+      () => console.log("🟢 MQTT 연결 성공 (CONTROL)"),
+        {
+    // 퍼블릭 테스트 브로커 예시 (wss:// 스킴이 HTTPS 페이지에서 필수)
+    brokerUrl: "wss://broker.hivemq.com:8000/mqtt"
+  }
     );
 
     // 2) next-button 클릭 시 data-video-src 를 읽어 CONTROL 메시지 발행
