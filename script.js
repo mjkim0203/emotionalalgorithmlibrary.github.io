@@ -5,11 +5,11 @@ const emotionColors = {
 };
 
 const emotionLinks = {
-  happy: "https://example.com/happy", sad: "https://example.com/sad",
-  angry: "https://example.com/angry", fearful: "https://example.com/fearful",
-  disgusted: "https://example.com/disgusted", surprised: "https://example.com/surprised",
-  neutral: "https://example.com/neutral"
-};
+      happy: "tri.joy.html", sad: "tri.sadness.html",
+      angry: "tri.anger.html", fearful: "tri.fear.html",
+      disgusted: "tri.disgust.html", surprised: "tri.surprise.html",
+      neutral: "tri.neutral.html"
+    };
 
 const emotionImages = {
           Neutral: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-100.png?v=1751373938451/IMOJI-100.png",
