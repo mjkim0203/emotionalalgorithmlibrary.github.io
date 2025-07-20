@@ -1,142 +1,59 @@
-const video = document.getElementById("video");
-    const canvas = document.getElementById("overlay");
-    const ctx = canvas.getContext("2d");
-    const bannerEl = document.getElementById("emotion-banner");
-    const graphicEl = document.getElementById("emotion-graphic");
-    const linkEl = document.getElementById("emotion-link");
-    const captureImageEl = document.getElementById("capture-image");
+async function getPreferredCameraStream() {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput');
+      let preferredDevice = videoDevices.find(device => device.label.toLowerCase().includes("elgato facecam"));
 
-    const emotionLabels = {
-      neutral: "Neutral", happy: "Joy", sad: "Sadness", angry: "Anger",
-      fearful: "Fear", disgusted: "Disgust", surprised: "Surprise"
-    };
-
-    const emotionColors = {
-      neutral: "#AAAEAA", happy: "#FFE048", sad: "#A7C9FF",
-      disgusted: "#D0FF3E", surprised: "#FF865C", angry: "#FF6489", fearful: "#CE6EB5"
-    };
-
-    const emotionLinks = {
-      happy: "tri.joy.html", sad: "tri.sadness.html",
-      angry: "tri.anger.html", fearful: "tri.fear.html",
-      disgusted: "tri.disgust.html", surprised: "tri.surprise.html",
-      neutral: "tri.neutral.html"
-    };
-
-    const emotionImages = {
-          Neutral: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-100.png?v=1751373938451/IMOJI-100.png",
-          Joy: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-200.png?v=1751373942329/IMOJI-200.png",
-          Sadness: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-300.png?v=1751373951234/IMOJI-300.png",
-          Anger: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-400.png?v=1751373958905/IMOJI-400.png",
-          Fear: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-500.png?v=1751373957111/IMOJI-500.png",
-          Disgust: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-600.png?v=1751373966696/IMOJI-600.png",
-          Surprise: "https://cdn.glitch.global/b5dd1b0e-2595-4522-b3c9-fac2d8d11eb4/IMOJI-700.png?v=1751373970745/IMOJI-700.png"
-        };
-
-    function hexToRgb(hex) {
-      const bigint = parseInt(hex.replace("#", ""), 16);
-      return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255 };
-    }
-
-    function rgbToHex(r, g, b) {
-      const toHex = (c) => {
-        const hex = Math.round(c).toString(16);
-        return hex.length === 1 ? "0" + hex : hex;
+      const constraints = {
+        video: preferredDevice
+          ? { deviceId: { exact: preferredDevice.deviceId }, width: 640, height: 480 }
+          : { width: 640, height: 480 },
+        audio: false
       };
-      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+
+      return await navigator.mediaDevices.getUserMedia(constraints);
     }
 
-    function blendEmotionColor(expressions) {
-      let total = 0, r = 0, g = 0, b = 0;
-      for (const emotion in expressions) {
-        if (emotionColors[emotion]) {
-          const weight = expressions[emotion];
-          const rgb = hexToRgb(emotionColors[emotion]);
-          r += rgb.r * weight;
-          g += rgb.g * weight;
-          b += rgb.b * weight;
-          total += weight;
-        }
-      }
-      return total === 0 ? "#000000" : rgbToHex(r / total, g / total, b / total);
-    }
-
-    function goToEmotionPage() {
-      if (!window._topEmotion) {
-        alert("감정이 아직 감지되지 않았습니다.");
-        return;
-      }
-      const link = emotionLinks[window._topEmotion];
-      if (link) window.location.href = link;
-      else alert("이동할 페이지가 정의되지 않았습니다.");
-    }
-
-    async function startCameraAndDetect() {
+    async function init() {
       await faceapi.nets.tinyFaceDetector.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
       await faceapi.nets.faceLandmark68TinyNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
       await faceapi.nets.faceExpressionNet.loadFromUri("https://justadudewhohacks.github.io/face-api.js/models");
 
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 }, audio: false });
-      video.srcObject = stream;
+      const video = document.getElementById("video");
+      try {
+        const stream = await getPreferredCameraStream();
+        video.srcObject = stream;
+      } catch (err) {
+        alert("카메라를 사용할 수 없습니다: " + err.message);
+        return;
+      }
 
       video.onloadedmetadata = () => {
         video.play();
-        const width = 640;
-        const height = 480;
+        const canvas = faceapi.createCanvasFromMedia(video);
+        const container = document.getElementById("canvasContainer");
+        container.innerHTML = "";
+        container.appendChild(canvas);
+        const width = container.clientWidth;
+        const height = width * 3 / 4;
         canvas.width = width;
         canvas.height = height;
-
-        drawLoop();
-        setInterval(analyzeEmotion, 1000); // 감정 분석은 1초마다
+        const displaySize = { width, height };
+        faceapi.matchDimensions(canvas, displaySize);
+        analyzeEmotionLoop(video, canvas, displaySize);
+        drawLoop(video, canvas);
       };
     }
 
-    function drawLoop() {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      requestAnimationFrame(drawLoop);
+    function drawLoop(video, canvas) {
+      const ctx = canvas.getContext("2d");
+      const draw = () => {
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, -canvas.width, 0, canvas.width, canvas.height);
+        ctx.restore();
+        requestAnimationFrame(draw);
+      };
+      draw();
     }
 
-    async function analyzeEmotion() {
-      const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 96, scoreThreshold: 0.3 });
-
-      const result = await faceapi.detectSingleFace(video, options)
-        .withFaceLandmarks(true)
-        .withFaceExpressions();
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.save();
-      ctx.translate(canvas.width, 0);
-      ctx.scale(-1, 1);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      ctx.restore();
-
-      if (result) {
-        const resized = faceapi.resizeResults(result, { width: canvas.width, height: canvas.height });
-        const box = resized.detection.box;
-        const expressions = result.expressions;
-
-        const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
-        const topEmotion = sorted[0][0];
-        window._topEmotion = topEmotion;
-        const emotionName = emotionLabels[topEmotion];
-
-        const color = blendEmotionColor(expressions);
-        if (bannerEl) bannerEl.style.backgroundColor = color;
-
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 6;
-        ctx.strokeRect(canvas.width - box.x - box.width, box.y, box.width, box.height);
-
-        ctx.font = "24px Pretendard";
-        ctx.fillStyle = color;
-        ctx.fillText(`${emotionName || topEmotion}`, canvas.width - box.x - box.width, box.y - 10);
-
-        if (emotionImages[emotionName]) graphicEl.src = emotionImages[emotionName];
-        captureImageEl.src = "https://cdn.glitch.global/f52c6b01-3ecd-4d0c-9574-b68cf7003384/CAPTURE%20.png?v=1751635645071/CAPTURE.png";
-
-        if (emotionLinks[topEmotion]) linkEl.classList.add("active");
-        else linkEl.classList.remove("active");
-      }
-    }
-
-    startCameraAndDetect();
+    init();
