@@ -20,12 +20,9 @@
       <div class="prompt-text">문장 불러오는 중...</div>
     </div>
     <div id="emotion-banner">HOW ALGORITM U FEELING TODAY?</div>
-
-    <div id="canvasContainer">
-      <video id="video" autoplay muted playsinline style="visibility:hidden; position:absolute; width:0; height:0;"></video>
-    </div>
-
-    <a id="emotion-link" href="javascript:void(0);" class="emotion-button" onclick="goToEmotionPage()">
+    <div id="canvasContainer"></div>
+    <!-- ✅ target="_blank" 제거하여 새 창이 아닌 현재 창에서 열림 -->
+    <a id="emotion-link" href="#" class="emotion-button">
       <img id="capture-image" alt="감정별 캡처 버튼" />
     </a>
     <p id="capture-text">아이콘을 눌러 캡쳐해주세요!</p>
