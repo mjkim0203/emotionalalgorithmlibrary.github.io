@@ -101,32 +101,33 @@
 $(document).ready(function() {
   const formInputs = $('input[type="text"]');
 
-  // 1) 포커스 시: 라벨을 위로 올리고, 빈 칸에도 filled 추가
+  // 포커스했을 때는 무조건 둘 다 붙이기
   formInputs.on('focus', function() {
     $(this).siblings('.formLabel').addClass('formTop');
     $(this).addClass('filled');
   });
 
-  // 2) 입력 중: 한 글자라도 있으면 filled, 없으면 해제
+  // 입력 중일 때 토글
   formInputs.on('input', function() {
-    if ($.trim($(this).val()) !== '') {
+    if ($.trim(this.value) !== '') {
       $(this).addClass('filled');
     } else {
       $(this).removeClass('filled');
     }
   });
 
-  // 3) 블러 시: 값이 남아 있으면 filled·formTop 유지, 없으면 둘 다 제거
+  // 블러했을 때는 절대 filled 제거하지 않음
   formInputs.on('blur', function() {
     const $el = $(this);
-    const hasVal = $.trim($el.val()) !== '';
-
-    if (hasVal) {
-      $el.addClass('filled');
-      $el.siblings('.formLabel').addClass('formTop');
-    } else {
-      $el.removeClass('filled');
+    if ($.trim(this.value) === '') {
+      // 값이 비어 있으면 라벨만 내리기
       $el.siblings('.formLabel').removeClass('formTop');
+      // (filled는 남겨둡니다—원하시면 이 줄을 지우세요)
+      // $el.removeClass('filled');
+    } else {
+      // 값이 있으면 라벨은 위에 고정
+      $el.siblings('.formLabel').addClass('formTop');
+      // 고의로 filled 유지
     }
   });
 });
