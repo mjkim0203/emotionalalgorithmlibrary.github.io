@@ -98,40 +98,40 @@
 
   
 <script>
-$(document).ready(function() {
+$(function(){
   const formInputs = $('input[type="text"]');
 
-  // 포커스했을 때는 무조건 둘 다 붙이기
-  formInputs.on('focus', function() {
-    $(this).siblings('.formLabel').addClass('formTop');
-    $(this).addClass('filled');
-  });
-
-  // 입력 중일 때 토글
-  formInputs.on('input', function() {
-    if ($.trim(this.value) !== '') {
-      $(this).addClass('filled');
-    } else {
-      $(this).removeClass('filled');
+  // 0) 초기값 반영 (플레이백 등으로 이미 값이 있으면 스타일 유지)
+  formInputs.each(function(){
+    if ($.trim(this.value) !== "") {
+      $(this)
+        .addClass('filled')
+        .siblings('.formLabel').addClass('formTop');
     }
   });
 
-  // 블러했을 때는 절대 filled 제거하지 않음
-  formInputs.on('blur', function() {
-    const $el = $(this);
-    if ($.trim(this.value) === '') {
-      // 값이 비어 있으면 라벨만 내리기
-      $el.siblings('.formLabel').removeClass('formTop');
-      // (filled는 남겨둡니다—원하시면 이 줄을 지우세요)
-      // $el.removeClass('filled');
-    } else {
-      // 값이 있으면 라벨은 위에 고정
-      $el.siblings('.formLabel').addClass('formTop');
-      // 고의로 filled 유지
+  // 1) focus 시: 라벨 올리고, 하얀 배경(=filled) 무조건 붙이기
+  formInputs.on('focus', function(){
+    $(this)
+      .addClass('filled')
+      .siblings('.formLabel').addClass('formTop');
+  });
+
+  // 2) input 시: 값 있으면 filled, 없으면 filled 제거
+  formInputs.on('input', function(){
+    $(this).toggleClass('filled', $.trim(this.value) !== "");
+  });
+
+  // 3) blur 시: 값이 비어 있으면 라벨만 내리고, filled는 절대 건드리지 않음
+  formInputs.on('blur', function(){
+    if ($.trim(this.value) === "") {
+      $(this).siblings('.formLabel').removeClass('formTop');
     }
+    // (여기서는 절대 $(this).removeClass('filled') 하지 않습니다)
   });
 });
 </script>
+
 
 </body>
 </html>
