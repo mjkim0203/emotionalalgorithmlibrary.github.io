@@ -100,6 +100,21 @@
 
   
 <script>
+  const hoverCursor = "assets/hover.png";   // 버튼 hover 시
+
+  // ✅ 마우스 움직임 시 위치와 hover 감지
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+
+    const target = document.elementFromPoint(e.clientX, e.clientY);
+
+    if (target && target.closest(".login-button")) {
+      cursor.src = hoverCursor;
+    } else {
+      cursor.src = defaultCursor;
+    }
+  
 $(function(){
   const formInputs = $('input[type="text"]');
 
